@@ -72,8 +72,8 @@ export function generateMockBlueprint(input: BlueprintInput): Blueprint {
     updatedAt: now,
     input,
     productName,
-    oneLinePitch: `${productName} helps ${input.targetAudience.toLowerCase()} solve ${input.problemSolved.toLowerCase()} through a focused ${projectLabel.toLowerCase()} MVP.`,
-    problemStatement: `${input.targetAudience} need a simpler way to move from intent to action. The MVP should focus on the smallest repeatable workflow that proves users want this solution before adding complex automation or heavy integrations.`,
+    oneLinePitch: `${productName} helps ${input.targetAudience.toLowerCase()} get a clearer, faster path to ${input.productIdea.toLowerCase()} through a focused ${projectLabel} MVP.`,
+    problemStatement: `${input.problemSolved} The MVP should focus on the smallest repeatable workflow that proves ${input.targetAudience.toLowerCase()} want this solution before adding complex automation or heavy integrations.`,
     targetUsers: [
       input.targetAudience,
       "Early adopters actively looking for a better workflow",

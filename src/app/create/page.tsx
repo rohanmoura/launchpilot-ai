@@ -244,11 +244,10 @@ export default function CreateBlueprintPage() {
 
           <Card className="rounded-lg border-black/10 bg-white">
             <CardContent className="p-6">
-              <h2 className="text-xl font-semibold">Demo-safe AI behavior</h2>
+              <h2 className="text-xl font-semibold">Built for clear decisions</h2>
               <p className="mt-3 text-sm leading-6 text-[#625d54]">
-                This version uses a structured mock generator first. In Step 5,
-                we add the API route so Gemini or OpenRouter can plug in without
-                breaking the portfolio demo.
+                The blueprint keeps scope, timeline, risks, and next actions in
+                one place so a founder can decide what to build first.
               </p>
             </CardContent>
           </Card>
