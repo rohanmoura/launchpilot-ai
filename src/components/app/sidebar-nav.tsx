@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ClipboardList, LayoutDashboard, Library, Plus } from "lucide-react";
+import { ClipboardList, LayoutDashboard, Library, Plus, UserCircle } from "lucide-react";
 
+import { AccountStatus } from "@/components/app/account-status";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -21,6 +22,11 @@ const navItems = [
     href: "/blueprints",
     label: "Blueprints",
     icon: Library,
+  },
+  {
+    href: "/account",
+    label: "Account",
+    icon: UserCircle,
   },
 ];
 
@@ -60,12 +66,17 @@ export function SidebarNav() {
         })}
       </nav>
 
-      <div className="hidden px-4 lg:block">
+      <div className="px-4 pb-4 lg:hidden">
+        <AccountStatus />
+      </div>
+
+      <div className="hidden space-y-4 px-4 lg:block">
+        <AccountStatus />
         <div className="rounded-lg border border-white/10 bg-white/[0.06] p-4">
           <ClipboardList className="size-5 text-[#d6ff72]" />
           <p className="mt-4 text-sm font-semibold">Free workspace</p>
           <p className="mt-2 text-sm leading-6 text-white/50">
-            3 blueprint credits included for the portfolio MVP flow.
+            3 AI generation credits included to plan and compare early product ideas.
           </p>
         </div>
       </div>

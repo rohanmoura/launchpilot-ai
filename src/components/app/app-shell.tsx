@@ -3,6 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { SidebarNav } from "@/components/app/sidebar-nav";
+import { WorkspaceBadge } from "@/components/app/workspace-badge";
 
 type AppShellProps = {
   eyebrow: string;
@@ -19,9 +20,12 @@ export function AppShell({ eyebrow, title, description, children }: AppShellProp
         <header className="border-b border-black/10 bg-white/82 px-5 py-5 backdrop-blur sm:px-8">
           <div className="mx-auto flex max-w-6xl flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <p className="text-xs font-semibold uppercase text-[#14756b]">
-                {eyebrow}
-              </p>
+              <div className="flex flex-wrap items-center gap-2">
+                <p className="text-xs font-semibold uppercase text-[#14756b]">
+                  {eyebrow}
+                </p>
+                <WorkspaceBadge />
+              </div>
               <h1 className="mt-2 text-3xl font-semibold tracking-normal sm:text-4xl">
                 {title}
               </h1>

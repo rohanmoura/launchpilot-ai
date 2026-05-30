@@ -129,3 +129,166 @@
     @apply font-sans;
   }
 }
+
+@layer utilities {
+  @keyframes blueprint-scan {
+    0%,
+    100% {
+      opacity: 0.1;
+      transform: translateY(-40%);
+    }
+    45%,
+    55% {
+      opacity: 0.55;
+      transform: translateY(470%);
+    }
+  }
+
+  @keyframes blueprint-dots {
+    0% {
+      width: 0;
+    }
+    35% {
+      width: 0.45rem;
+    }
+    70%,
+    100% {
+      width: 1rem;
+    }
+  }
+
+  @keyframes blueprint-step {
+    0%,
+    100% {
+      border-color: rgb(255 255 255 / 0.1);
+      opacity: 0.55;
+    }
+    18%,
+    38% {
+      border-color: rgb(214 255 114 / 0.5);
+      opacity: 1;
+    }
+  }
+
+  @keyframes blueprint-card-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 rgb(214 255 114 / 0);
+    }
+    48%,
+    58% {
+      box-shadow: 0 0 0 3px rgb(214 255 114 / 0.18);
+    }
+  }
+
+  @keyframes blueprint-feature {
+    0%,
+    26%,
+    100% {
+      background: rgb(255 255 255 / 0.08);
+      transform: translateY(0);
+    }
+    12% {
+      background: rgb(214 255 114 / 0.16);
+      transform: translateY(-1px);
+    }
+  }
+
+  .blueprint-scan {
+    animation: blueprint-scan 5.4s ease-in-out infinite;
+  }
+
+  .blueprint-dots {
+    animation: blueprint-dots 1.4s steps(3, end) infinite;
+  }
+
+  .blueprint-step {
+    animation: blueprint-step 4.8s ease-in-out infinite;
+  }
+
+  .blueprint-step-2 {
+    animation-delay: 0.8s;
+  }
+
+  .blueprint-step-3 {
+    animation-delay: 1.6s;
+  }
+
+  .blueprint-card-pulse {
+    animation: blueprint-card-pulse 5.4s ease-in-out infinite;
+  }
+
+  .blueprint-feature {
+    animation: blueprint-feature 5.4s ease-in-out infinite;
+  }
+
+  .blueprint-feature-2 {
+    animation-delay: 0.4s;
+  }
+
+  .blueprint-feature-3 {
+    animation-delay: 0.8s;
+  }
+
+  .blueprint-feature-4 {
+    animation-delay: 1.2s;
+  }
+
+  .blueprint-feature-5 {
+    animation-delay: 1.6s;
+  }
+
+  .landing-reveal {
+    animation: landing-reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 28%;
+  }
+
+  .landing-reveal-delay-1 {
+    animation-range: entry 8% cover 36%;
+  }
+
+  .landing-card-hover {
+    transition:
+      transform 180ms ease,
+      border-color 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .landing-card-hover:hover {
+    border-color: rgb(20 117 107 / 0.28);
+    box-shadow: 0 18px 36px rgb(25 24 22 / 0.07);
+    transform: translateY(-3px);
+  }
+
+  @keyframes landing-reveal {
+    from {
+      opacity: 0;
+      transform: translateY(22px) scale(0.985);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .blueprint-scan,
+    .blueprint-dots,
+    .blueprint-step,
+    .blueprint-card-pulse,
+    .blueprint-feature,
+    .landing-reveal {
+      animation: none;
+    }
+
+    .landing-card-hover {
+      transition: none;
+    }
+
+    .landing-card-hover:hover {
+      transform: none;
+      box-shadow: none;
+    }
+  }
+}

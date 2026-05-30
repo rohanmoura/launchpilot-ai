@@ -23,10 +23,17 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   getBlueprintsSnapshot,
+  getServerBlueprintsSnapshot,
   subscribeToBlueprintStorage,
 } from "@/lib/blueprint-storage";
 import { projectTypeLabels } from "@/lib/format";
-import type { Blueprint } from "@/types/blueprint";
+import type { Blueprint, BlueprintGenerationSource } from "@/types/blueprint";
+
+const generationSourceLabels: Record<BlueprintGenerationSource, string> = {
+  gemini: "Generated with Gemini AI",
+  openrouter: "Generated with OpenRouter AI",
+  fallback: "Generated with local fallback",
+};
 
 function findBlueprint(snapshot: string, id: string) {
   try {
@@ -42,7 +49,7 @@ export default function BlueprintDetailPage() {
   const snapshot = useSyncExternalStore(
     subscribeToBlueprintStorage,
     getBlueprintsSnapshot,
-    getBlueprintsSnapshot,
+    getServerBlueprintsSnapshot,
   );
   const blueprint = useMemo(
     () => findBlueprint(snapshot, params.id),
@@ -87,6 +94,11 @@ export default function BlueprintDetailPage() {
                 <Badge variant="outline" className="rounded-md border-white/15 text-white">
                   {blueprint.input.budgetRange}
                 </Badge>
+                <Badge variant="outline" className="rounded-md border-white/15 text-white">
+                  {generationSourceLabels[
+                    blueprint.generationSource ?? "fallback"
+                  ]}
+                </Badge>
               </div>
               <h2 className="mt-5 text-2xl font-semibold">Product brief</h2>
               <p className="mt-3 max-w-4xl leading-7 text-white/62">
@@ -121,11 +133,23 @@ export default function BlueprintDetailPage() {
 
         <SectionCard title="Recommended tech stack" icon={Sparkles}>
           <div className="grid gap-3 md:grid-cols-2">
-            {blueprint.techStack.map((item) => (
-              <div key={item.layer} className="rounded-md border border-black/10 p-4">
-                <p className="text-sm font-semibold text-[#14756b]">{item.layer}</p>
-                <h3 className="mt-2 font-semibold">{item.recommendation}</h3>
-                <p className="mt-2 text-sm leading-6 text-[#625d54]">{item.why}</p>
+            {blueprint.techStack.map((item, index) => (
+              <div
+                key={item.layer}
+                className="rounded-md border border-black/10 bg-[#fbfaf7] p-4"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="grid size-8 shrink-0 place-items-center rounded-md bg-[#11100f] text-xs font-semibold text-white">
+                    {index + 1}
+                  </span>
+                  <div>
+                    <p className="text-xs font-semibold uppercase text-[#14756b]">
+                      {item.layer}
+                    </p>
+                    <h3 className="font-semibold">{item.recommendation}</h3>
+                  </div>
+                </div>
+                <p className="mt-4 text-sm leading-6 text-[#625d54]">{item.why}</p>
               </div>
             ))}
           </div>
@@ -133,12 +157,22 @@ export default function BlueprintDetailPage() {
 
         <SectionCard title="30/60/90 day roadmap" icon={Map}>
           <div className="grid gap-3 md:grid-cols-3">
-            {blueprint.roadmap.map((phase) => (
-              <div key={phase.label} className="rounded-md bg-[#f7f5ef] p-4">
-                <p className="text-xs font-semibold uppercase text-[#a35c1d]">
-                  {phase.label}
-                </p>
-                <h3 className="mt-2 font-semibold">{phase.title}</h3>
+            {blueprint.roadmap.map((phase, index) => (
+              <div
+                key={phase.label}
+                className="relative rounded-md border border-black/10 bg-[#f7f5ef] p-4"
+              >
+                <div className="flex items-start gap-3">
+                  <span className="grid size-9 shrink-0 place-items-center rounded-full bg-[#14756b] text-sm font-semibold text-white">
+                    {index + 1}
+                  </span>
+                  <div>
+                    <p className="text-xs font-semibold uppercase text-[#a35c1d]">
+                      {phase.label}
+                    </p>
+                    <h3 className="mt-1 font-semibold">{phase.title}</h3>
+                  </div>
+                </div>
                 <div className="mt-4">
                   <BulletList items={phase.items} />
                 </div>
@@ -168,15 +202,27 @@ export default function BlueprintDetailPage() {
         <Card className="rounded-lg border-[#d6ff72]/50 bg-[#d6ff72] text-[#1f2a0d]">
           <CardContent className="flex flex-col gap-4 p-6 lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <h2 className="text-2xl font-semibold">Want this built?</h2>
+              <h2 className="text-2xl font-semibold">Turn this into an MVP sprint.</h2>
               <p className="mt-2 max-w-2xl leading-7 text-[#4b5d19]">
-                KMAX Design can turn this blueprint into a working MVP sprint
-                with UI, frontend, AI flow, and launch-ready product thinking.
+                Share this blueprint with KMAX Design to scope the first usable
+                version, align the feature plan, and move from strategy into
+                build mode.
               </p>
             </div>
-            <Button asChild className="rounded-md bg-[#191816] text-white">
-              <Link href="/create">Plan another idea</Link>
-            </Button>
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <Button asChild className="rounded-md bg-[#191816] text-white">
+                <Link href="https://kmaxdesign.com/" target="_blank" rel="noreferrer">
+                  Work with KMAX
+                </Link>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                className="rounded-md border-[#1f2a0d]/20 bg-transparent"
+              >
+                <Link href="/create">Plan another idea</Link>
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>

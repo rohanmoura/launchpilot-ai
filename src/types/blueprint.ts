@@ -2,6 +2,8 @@ export type ProjectType = "web-app" | "mobile-app" | "ai-tool" | "saas";
 
 export type BlueprintStatus = "draft" | "generated" | "archived";
 
+export type BlueprintGenerationSource = "gemini" | "openrouter" | "fallback";
+
 export type BlueprintInput = {
   productIdea: string;
   targetAudience: string;
@@ -42,6 +44,7 @@ export type Blueprint = {
   monetizationIdeas: string[];
   risksAndAssumptions: string[];
   nextSteps: string[];
+  generationSource?: BlueprintGenerationSource;
 };
 
 export type BlueprintSummary = Pick<

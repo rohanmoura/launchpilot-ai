@@ -1,6 +1,7 @@
 "use client";
 
 import { demoBlueprints } from "@/data/demo-blueprints";
+import { deleteCloudBlueprint, upsertCloudBlueprint } from "@/lib/blueprint-cloud";
 import type { Blueprint, BlueprintSummary } from "@/types/blueprint";
 
 const STORAGE_KEY = "launchpilot.blueprints";
@@ -43,6 +44,7 @@ export function saveBlueprint(blueprint: Blueprint) {
 
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(nextBlueprints));
   window.dispatchEvent(new Event(STORAGE_EVENT));
+  void upsertCloudBlueprint(blueprint);
 }
 
 export function deleteBlueprint(id: string) {
@@ -52,6 +54,16 @@ export function deleteBlueprint(id: string) {
 
   const nextBlueprints = getBlueprints().filter((blueprint) => blueprint.id !== id);
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(nextBlueprints));
+  window.dispatchEvent(new Event(STORAGE_EVENT));
+  void deleteCloudBlueprint(id);
+}
+
+export function replaceBlueprints(blueprints: Blueprint[]) {
+  if (!canUseStorage()) {
+    return;
+  }
+
+  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(blueprints));
   window.dispatchEvent(new Event(STORAGE_EVENT));
 }
 
@@ -91,4 +103,8 @@ export function getBlueprintsSnapshot() {
   }
 
   return window.localStorage.getItem(STORAGE_KEY) ?? DEMO_BLUEPRINTS_JSON;
+}
+
+export function getServerBlueprintsSnapshot() {
+  return DEMO_BLUEPRINTS_JSON;
 }
